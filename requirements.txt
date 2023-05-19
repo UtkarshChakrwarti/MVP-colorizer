@@ -6,3 +6,4 @@ Pillow
 scikit_image
 torch
 Werkzeug
+gunicorn
