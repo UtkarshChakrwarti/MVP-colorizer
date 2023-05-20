@@ -15,7 +15,7 @@ CORS(app)  # Enable CORS for all routes
 app.debug = False
 
 app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png'}
+app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg'}
 app.config['MAX_IMAGES'] = 100
 
 colorizer_siggraph17 = siggraph17(pretrained=True).eval()
@@ -35,8 +35,9 @@ def process_image(file_path):
 
     # Save the colorized images
     filename = os.path.splitext(os.path.basename(file_path))[0]
-    output_path_siggraph17 = os.path.join(app.config['UPLOAD_FOLDER'], f'{filename}_siggraph17.png')
 
+    #save the output image with same extension as input image
+    output_path_siggraph17 = os.path.join(app.config['UPLOAD_FOLDER'], f'{filename}_colored{os.path.splitext(file_path)[1]}')
     plt.imsave(output_path_siggraph17, out_img_siggraph17)
 
     return output_path_siggraph17
@@ -46,7 +47,7 @@ def remove_images():
         time.sleep(420)  # Sleep for 7 minutes
 
         # Remove images if the number exceeds the limit
-        images = glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*.png'))
+        images = glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*.png')) + glob.glob(os.path.join(app.config['UPLOAD_FOLDER'], '*.jpg'))
         if len(images) > app.config['MAX_IMAGES']:
             oldest_images = sorted(images, key=os.path.getctime)[:len(images) - app.config['MAX_IMAGES']]
             for image in oldest_images:
