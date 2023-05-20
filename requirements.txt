@@ -6,4 +6,5 @@ Pillow
 scikit_image
 torch
 Werkzeug
+flask-cors
 gunicorn

@@ -1,4 +1,5 @@
 from flask import Flask, request, send_from_directory, url_for
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import glob
@@ -8,6 +9,7 @@ import matplotlib.pyplot as plt
 from colorizers import *
 
 app = Flask(__name__, static_folder='static')
+CORS(app)  # Enable CORS for all routes
 
 # debug mode
 app.debug = False
