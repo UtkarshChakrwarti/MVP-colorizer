@@ -37,7 +37,7 @@ def process_image(file_path):
     filename = os.path.splitext(os.path.basename(file_path))[0]
 
     #save the output image with same extension as input image
-    output_path_siggraph17 = os.path.join(app.config['UPLOAD_FOLDER'], f'{filename}_colored{os.path.splitext(file_path)[1]}')
+    output_path_siggraph17 = os.path.join(app.config['UPLOAD_FOLDER'], f'{filename}_siggraph17{os.path.splitext(file_path)[1]}')
     plt.imsave(output_path_siggraph17, out_img_siggraph17)
 
     return output_path_siggraph17
