@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from colorizers import *
 
 app = Flask(__name__, static_folder='static')
-CORS(app)  # Enable CORS for all routes
+CORS(app, supports_credentials=True)  # Enable CORS for all routes
 
 # debug mode
 app.debug = False
