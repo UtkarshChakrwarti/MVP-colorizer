@@ -37,7 +37,7 @@ python app.py
 
 2. Access the API at `http://localhost:5000` in your web browser or via API clients like Postman.
 
-3. Upload a black and white image using the API endpoint `/` (root URL) as a `POST` request with the image file attached. The API will respond with the URL of the colorized image.
+3. Upload a black and white image using the API endpoint `/` (root URL) as a `POST` with paramaeter as `file` request with the image file attached. The API will respond with the URL of the colorized image.
 
 4. Download the colorized image by accessing the URL provided in the API response or by using the `/uploads/<filename>` endpoint as a `GET` request.
 
