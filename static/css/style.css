@@ -1,0 +1,201 @@
+#colorizer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Redesign the progress bar with smooth and linear animation looking like a wave */
+.progress-container {
+    width: 100%;
+    height: 5px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    margin-top: 10px;
+    display: none;
+
+}
+
+.progress-container .progress-bar {
+    height: 100%;
+    background: #4caf50;
+    border-radius: 5px;
+    width: 0;
+    transition: width 0.5s ease-in-out;
+
+    /* Smooth transition for the progress bar */
+}
+
+.image-card {
+    border-radius: 5px;
+    overflow: hidden;
+    height: fit-content;
+}
+.image-card:hover {
+    background-color: #f5f5f5;
+}
+.thumbnail {
+    position: relative;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#dropZone {
+    min-height: 100px;
+}
+
+#downloadButton {
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: #2185d0;
+    color: #fff;
+    padding: .78571429em 1.5em .78571429em;
+    font-weight: 700;
+    line-height: 1em;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    vertical-align: baseline;
+    text-transform: none;
+    font-style: normal;
+    margin: 0 .25em 0 0;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #333;
+    color: #f5f5f5;
+}
+
+.dark-mode .container {
+    background-color: #333;
+}
+
+.dark-mode .image-card {
+    background-color: #333;
+}
+
+.dark-mode .image-card:hover {
+    background-color: #444;
+}
+
+.dark-mode footer {
+    background-color: #333;
+}
+
+/* Responsive Image Grid */
+#imageGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+    align-items: center;
+}
+
+/* Dark Mode Toggle Styling */
+.dark-mode-toggle {
+    position: static;
+    padding: 10px;
+    top: 50px;
+    left: 50px;
+    z-index: 10;
+}
+
+/* Dark Mode Toggle Styling */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    user-select: none;
+    outline: none;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    user-select: none;
+    outline: none;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    user-select: none;
+    outline: none;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* Icon Styling */
+.dark-mode-toggle i {
+    color: #f39c12;
+    /* Icon color */
+}
+
+.github-fork-banner {
+    position: fixed;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+

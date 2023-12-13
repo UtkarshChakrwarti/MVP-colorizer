@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smritink - Black & White Image Colorizer</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.2.3/gh-fork-ribbon.min.css" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/smritink.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="grid grid-rows-1 min-h-screen">
+    <a class="github-fork-ribbon" href="https://github.com/UtkarshChakrwarti/MVP-colorizer"
+        data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
+
+
+    <div id="colorizer" class="container mx-auto mt-5">
+        <h1 class="text-center text-3xl font-bold mb-5 padding-5" style="font-family: 'Open Sans Condensed', sans-serif;">
+             Smritink
+        </h1>
+        <!-- Dark Mode Toggle -->
+        <div class="dark-mode-toggle flex items-center">
+            <i class="fas fa-sun"></i> <!-- Sun icon for light mode -->
+            <label class="switch mx-2">
+                <input type="checkbox" id="darkModeSwitch">
+                <span class="slider round"></span>
+            </label>
+            <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+        </div>
+
+        <form id="uploadForm" enctype="multipart/form-data" class="mb-5">
+            <div class="mb-3 p-5 border-2 border-dashed cursor-pointer" id="dropZone">
+                <p class="text-center text-gray-300">Drag and drop images here or click to select</p>
+                <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
+                <div id="thumbnails" class="flex flex-wrap mt-2"></div>
+            </div>
+            <div class="progress-container mt-3">
+                <div class="progress-bar bg-green-500" id="progressBar" style="width: 0; height: 5px;">
+                </div>
+            </div>
+            <div class="colorizeButton mt-3 text-center">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto"
+                    id="colorizeButton"><i class="fa fa-paint-brush"></i> Colorize</button>
+            </div>
+        </form>
+
+        <div id="metrics" class="mt-3"></div>
+        <div id="imageGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3"></div>
+
+
+
+
+
+    </div>
+
+    <footer class="bg-gray-200 text-center py-4">
+
+        Developed by
+        <a href="https://github.com/UtkarshChakrwarti" target="_blank" class="social-icon">
+            <i class="fab fa-github"></i> Utkarsh Chakrwarti
+        </a>
+        |
+        <a href="https://www.linkedin.com/in/utkarshchakrwarti/" target="_blank" class="social-icon">
+            <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        </p>
+    </footer>
+
+    <div id="toast"
+        class="hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-200 text-black px-4 py-2 rounded shadow-lg">
+        <strong>Privacy Notice:</strong> Images are not stored on our servers. They are immediately deleted after
+        a frequent interval for your privacy and security.
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>
