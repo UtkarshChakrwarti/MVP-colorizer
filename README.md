@@ -1,66 +1,88 @@
 
----
+# MVP Colorizer (Smritink)
 
-# Image Colorization API
-
-The Image Colorization API is a Flask application that allows users to upload black and white images and receive colorized versions in return. It utilizes deep learning models to perform the colorization process.
+## Introduction
+MVP Colorizer (Smritink) is a Flask-based web application designed for colorizing black and white images using advanced deep learning models. The latest version includes user interface enhancements and improved colorization techniques, making it more efficient and user-friendly.
 
 ## Features
+- **Enhanced User Interface**: A more intuitive and responsive design for easy uploading and downloading of images.
+- **Support for Common Image Formats**: Users can upload images in JPG, JPEG, and PNG formats.
+- **Improved Colorization Algorithm**: Utilizes the Siggraph'17 model for more accurate and vibrant colorization.
+- **Interactive Web Interface**: Users can easily navigate through the application to upload and view colorized images.
 
-- Upload black and white images in common formats (e.g., JPG, JPEG, PNG).
-- Colorize uploaded images using the Siggraph'17 model.
-- Download the colorized images.
-- Automatic removal of old colorized images to manage storage space.
-- RESTful API endpoints for image upload and download.
+## Getting Started
+### Requirements
+- Python 3.x
+- Flask
+- Additional Python libraries as listed in `requirements.txt`
 
-## Installation
-
-1. Clone the repository:
-
-```shell
-git clone https://github.com/your-username/image-colorization-api.git
-```
-
-2. Install the required dependencies using pip:
-
-```shell
-pip install -r requirements.txt
-```
+### Installation and Setup
+1. Clone the repository to your local machine.
+2. Install the required Python libraries using `pip install -r requirements.txt`.
+3. Run the Flask application with `python app.py`.
 
 ## Usage
+### Uploading Images
+- Navigate to the web interface.
+- Click on the upload section and select a black and white image.
+- Submit the image for colorization.
 
-1. Start the Flask application:
+### Downloading Images
+- After colorization, the image will be displayed on the web interface.
+- Click the download link to save the colorized image.
 
-```shell
-python app.py
-```
 
-2. Access the API at `http://localhost:5000` in your web browser or via API clients like Postman.
+## API Reference for MVP Colorizer
 
-3. Upload a black and white image using the API endpoint `/` (root URL) as a `POST` with paramaeter as `file` request with the image file attached. The API will respond with the URL of the colorized image.
+The MVP Colorizer Flask application offers a simple API for uploading black and white images and receiving colorized versions in return. Below are the details of the available endpoints.
 
-4. Download the colorized image by accessing the URL provided in the API response or by using the `/uploads/<filename>` endpoint as a `GET` request.
+## Endpoints
 
-## Configuration
+### 1. Home Page
+- **URL**: `/`
+- **Method**: `GET`
+- **Description**: Serves the home page of the application.
+- **Response**: HTML content of `index.html`.
 
-The application can be configured by modifying the options in the `config.py` file. Available configuration options include:
+### 2. Upload Image
+- **URL**: `/upload`
+- **Method**: `POST`
+- **Description**: Receives one or more black and white images from the user, processes them, and returns paths for the colorized images.
+- **Data Params**: 
+  - `file`: The image file(s) to be uploaded. Must be in `jpg`, `jpeg`, or `png` format.
+- **Success Response**:
+  - **Code**: 200 
+  - **Content**: JSON containing:
+    - `processed_images`: List of URLs for downloading the colorized images.
+    - `processing_time`: Time taken to process the images.
+- **Error Response**:
+  - **Code**: 400 BAD REQUEST
+  - **Content**: Error message.
 
-- `UPLOAD_FOLDER`: The directory where uploaded images and colorized images are stored.
-- `ALLOWED_EXTENSIONS`: The allowed file extensions for image uploads.
-- `MAX_IMAGES`: The maximum number of colorized images to keep before removing the oldest ones.
+### 3. Download Image
+- **URL**: `/uploads/<filename>`
+- **Method**: `GET`
+- **Description**: Allows downloading of a colorized image.
+- **URL Params**:
+  - **Required**: `filename` - Name of the file to be downloaded.
+- **Success Response**:
+  - **Code**: 200
+  - **Content**: The requested image file.
+- **Error Response**:
+  - **Code**: 404 NOT FOUND
+  - **Content**: Error message if the file is not found.
+
+## Additional Information
+- The application uses the `colorizers` package to process the images.
+- Images are temporarily stored in an `uploads` folder and are automatically deleted after a certain threshold to manage storage.
+- The server starts a background thread (`start_remove_images_thread`) to remove old images from the server.
+
 
 ## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
-
-## Acknowledgements
-
-This application is based on the following Github repository: [https://github.com/richzhang/colorization](https://github.com/richzhang/colorization).
+Contributions to MVP Colorizer are welcome. Please feel free to suggest features, report bugs, or submit pull requests via GitHub.
 
 ## License
+This project is released under the [MIT License](LICENSE.md).
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-Feel free to modify and expand upon this README file based on your specific project requirements. Include additional sections such as deployment instructions, API documentation, or examples of how to integrate the API into other applications.
+## Acknowledgements
+Special thanks to the contributors and the open-source community for the support and resources that made this project possible.
