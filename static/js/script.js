@@ -1,20 +1,56 @@
+const colorizeButton = document.getElementById('colorizeButton');
+const dropZone = document.getElementById('dropZone');
+const imageUploadInput = document.getElementById('imageUpload');
+const progressBarContainer = document.querySelector('.progress-container');
+const progressBar = document.getElementById('progressBar');
+let currentFiles = []; // Array to keep track of current files
+
 function showToast() {
     var toast = document.getElementById("toast");
     toast.classList.remove("hidden");
-    setTimeout(function(){ toast.classList.add("hidden"); }, 4000);
+    setTimeout(function () { toast.classList.add("hidden"); }, 4000);
 }
 
 // Call this function when you want to show the toast
 showToast();
 
-document.addEventListener('DOMContentLoaded', function () {
-    const colorizeButton = document.getElementById('colorizeButton');
-    const dropZone = document.getElementById('dropZone');
-    const imageUploadInput = document.getElementById('imageUpload');
-    const progressBarContainer = document.querySelector('.progress-container');
-    const progressBar = document.getElementById('progressBar');
-    let currentFiles = []; // Array to keep track of current files
+function syncFilesWithInput() {
+    const dataTransfer = new DataTransfer();
+    currentFiles.forEach(file => dataTransfer.items.add(file));
+    imageUploadInput.files = dataTransfer.files;
+}
 
+function removeFileAndThumbnail(index) {
+    currentFiles.splice(index, 1); // Remove file from array
+    syncFilesWithInput(); // Update file input
+    updateThumbnails(); // Update thumbnails
+}
+
+function updateThumbnails() {
+    const thumbnailsContainer = document.getElementById('thumbnails');
+    thumbnailsContainer.innerHTML = '';
+    currentFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const img = new Image();
+            img.src = e.target.result;
+            img.onload = function () {
+                const thumbnail = document.createElement('div');
+                thumbnail.className = 'thumbnail w-24 h-24 relative mr-2';
+                thumbnail.innerHTML = `<img src="${img.src}" alt="Thumbnail" class="w-full h-full object-cover"><div class="close absolute top-0 right-0 bg-red-500 text-white rounded-full cursor-pointer" onclick="removeFileAndThumbnail(${index})"><i class="fas fa-times"></i></div>`;
+                // Attach the event listener to the close button
+                thumbnail.querySelector('.close').addEventListener('click', function () {
+                    removeFileAndThumbnail(index);
+                });
+
+                thumbnailsContainer.appendChild(thumbnail);
+            };
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     // Dark Mode Toggle Functionality
     document.getElementById('darkModeSwitch').addEventListener('change', function () {
         document.body.classList.toggle('dark-mode');
@@ -24,41 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
     colorizeButton.addEventListener('click', function () {
         progressBarContainer.style.display = 'block';
     });
-    function syncFilesWithInput() {
-        const dataTransfer = new DataTransfer();
-        currentFiles.forEach(file => dataTransfer.items.add(file));
-        imageUploadInput.files = dataTransfer.files;
-    }
 
-    function removeFileAndThumbnail(index) {
-        currentFiles.splice(index, 1); // Remove file from array
-        syncFilesWithInput(); // Update file input
-        updateThumbnails(); // Update thumbnails
-    }
-
-    function updateThumbnails() {
-        const thumbnailsContainer = document.getElementById('thumbnails');
-        thumbnailsContainer.innerHTML = '';
-        currentFiles.forEach((file, index) => {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const img = new Image();
-                img.src = e.target.result;
-                img.onload = function () {
-                    const thumbnail = document.createElement('div');
-                    thumbnail.className = 'thumbnail w-24 h-24 relative mr-2';
-                    thumbnail.innerHTML = `<img src="${img.src}" alt="Thumbnail" class="w-full h-full object-cover"><div class="close absolute top-0 right-0 bg-red-500 text-white rounded-full cursor-pointer" onclick="removeFileAndThumbnail(${index})"><i class="fas fa-times"></i></div>`;
-                    // Attach the event listener to the close button
-                    thumbnail.querySelector('.close').addEventListener('click', function () {
-                        removeFileAndThumbnail(index);
-                    });
-
-                    thumbnailsContainer.appendChild(thumbnail);
-                };
-            };
-            reader.readAsDataURL(file);
-        });
-    }
 
     dropZone.addEventListener('click', function () {
         if (currentFiles.length === 0) {
