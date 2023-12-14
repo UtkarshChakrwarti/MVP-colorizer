@@ -12,7 +12,7 @@ function showToast() {
 }
 
 // Call this function when you want to show the toast
-showToast();
+setTimeout(showToast, 1000);
 
 function syncFilesWithInput() {
     const dataTransfer = new DataTransfer();
