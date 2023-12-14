@@ -1,10 +1,5 @@
 Flask
-ipython
-matplotlib
-numpy
-Pillow
-scikit_image
-torch
-Werkzeug
 flask-cors
-gunicorn
+Pillow
+torch
+skimage

@@ -5,7 +5,7 @@ import os
 import glob
 import threading
 import time
-import matplotlib.pyplot as plt
+from PIL import Image
 from colorizers import *
 
 app = Flask(__name__, static_folder='static')
@@ -21,6 +21,7 @@ colorizer_siggraph17 = siggraph17(pretrained=True).eval()
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
 
 
 def process_image(file_path, colorizer):
@@ -39,14 +40,13 @@ def process_image(file_path, colorizer):
 
     if colorizer == colorizer_eccv16:
         # colorizer outputs 256x256 image, we resize to 512x512 to match input size!
-
         out_img_eccv16 = postprocess_tens(
             tens_l_orig, colorizer(tens_l_rs).cpu())
 
         filename = os.path.splitext(os.path.basename(file_path))[0]
         output_path_eccv16 = os.path.join(
             app.config['UPLOAD_FOLDER'], f'{filename}_colorized{os.path.splitext(file_path)[1]}')
-        plt.imsave(output_path_eccv16, out_img_eccv16)
+        Image.fromarray((out_img_eccv16 * 255).astype(np.uint8)).save(output_path_eccv16)
         return output_path_eccv16
 
     out_img_siggraph17 = postprocess_tens(
@@ -55,7 +55,7 @@ def process_image(file_path, colorizer):
     filename = os.path.splitext(os.path.basename(file_path))[0]
     output_path_siggraph17 = os.path.join(
         app.config['UPLOAD_FOLDER'], f'{filename}_colorized{os.path.splitext(file_path)[1]}')
-    plt.imsave(output_path_siggraph17, out_img_siggraph17)
+    Image.fromarray((out_img_siggraph17 * 255).astype(np.uint8)).save(output_path_siggraph17)
 
     return output_path_siggraph17
 
