@@ -2,4 +2,4 @@ Flask
 flask-cors
 Pillow
 torch
-skimage
+scikit-image
