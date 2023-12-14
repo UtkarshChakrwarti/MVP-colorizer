@@ -93,6 +93,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     document.getElementById('uploadForm').addEventListener('submit', function (event) {
         event.preventDefault();
+    
+        // Get the selected colorizer model
+        const colorizerModelSelect = document.getElementById('colorizerModel');
+        const colorizerModel = colorizerModelSelect.options[colorizerModelSelect.selectedIndex].value;
+    
         const imageFiles = imageUploadInput.files;
         const numImages = imageFiles.length;
         const totalProcessingTime = 20 * numImages;
@@ -111,16 +116,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 500);
 
         let formData = new FormData();
+        formData.append('colorizer_model', colorizerModel);  // Pass the selected colorizer model
+    
         for (let i = 0; i < imageFiles.length; i++) {
             formData.append('file', imageFiles[i]);
         }
-
+    
         fetch('/upload', {
             method: 'POST',
             body: formData,
         })
-            .then(response => response.json())
-            .then(data => {
+        .then(response => response.json())
+        .then(data => {
                 clearInterval(interval);
                 progressBar.style.width = '100%';
                 setTimeout(() => {

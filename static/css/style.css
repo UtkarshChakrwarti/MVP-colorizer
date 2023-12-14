@@ -4,6 +4,7 @@
     align-items: center;
 }
 
+
 /* Redesign the progress bar with smooth and linear animation looking like a wave */
 .progress-container {
     width: 100%;
@@ -93,6 +94,15 @@ body.dark-mode {
     background-color: #333;
 }
 
+.dark-mode #colorizerModel {
+    background-color: #333;
+    color: #f5f5f5;
+}
+
+.dark-mode #colorizerModel option {
+    background-color: #333;
+    color: #f5f5f5;
+}
 /* Responsive Image Grid */
 #imageGrid {
     display: grid;

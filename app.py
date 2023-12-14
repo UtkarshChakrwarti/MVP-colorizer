@@ -15,16 +15,15 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'jpg', 'jpeg', 'png'}
 app.config['MAX_IMAGES'] = 10
 
+colorizer_eccv16 = eccv16(pretrained=True).eval()
 colorizer_siggraph17 = siggraph17(pretrained=True).eval()
-if torch.cuda.is_available():
-    colorizer_siggraph17.cuda()
 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 
-def process_image(file_path):
+def process_image(file_path, colorizer):
     img = Image.open(file_path)
 
     # Check if the image is in PNG format
@@ -37,8 +36,18 @@ def process_image(file_path):
     # Continue with the rest of the processing
     img = load_img(file_path)
     (tens_l_orig, tens_l_rs) = preprocess_img(img, HW=(512, 512))
-    if torch.cuda.is_available():
-        tens_l_rs = tens_l_rs.cuda()
+
+    if colorizer == colorizer_eccv16:
+        # colorizer outputs 256x256 image, we resize to 512x512 to match input size!
+
+        out_img_eccv16 = postprocess_tens(
+            tens_l_orig, colorizer(tens_l_rs).cpu())
+
+        filename = os.path.splitext(os.path.basename(file_path))[0]
+        output_path_eccv16 = os.path.join(
+            app.config['UPLOAD_FOLDER'], f'{filename}_colorized{os.path.splitext(file_path)[1]}')
+        plt.imsave(output_path_eccv16, out_img_eccv16)
+        return output_path_eccv16
 
     out_img_siggraph17 = postprocess_tens(
         tens_l_orig, colorizer_siggraph17(tens_l_rs).cpu())
@@ -74,10 +83,14 @@ def index():
 
 
 @app.route('/upload', methods=['POST'])
+# Inside the upload_file function in app.py
 def upload_file():
     start_time = time.time()
     files = request.files.getlist("file")
     processed_images = []
+
+    # Get the colorizer model from the user
+    colorizer_model = request.form.get("colorizer_model")
 
     for file in files:
         if file and allowed_file(file.filename):
@@ -85,7 +98,16 @@ def upload_file():
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
 
-            colorized_image_path = process_image(file_path)
+            # Use the selected colorizer model
+            if colorizer_model == "siggraph17":
+                colorized_image_path = process_image(
+                    file_path, colorizer_siggraph17)
+            elif colorizer_model == "eccv16":
+                colorized_image_path = process_image(
+                    file_path, colorizer_eccv16)
+            else:
+                return jsonify({'error': 'Invalid colorizer model'})
+
             processed_images.append(
                 url_for('download_file', filename=os.path.basename(colorized_image_path)))
 
