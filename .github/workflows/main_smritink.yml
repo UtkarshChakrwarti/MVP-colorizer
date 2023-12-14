@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'smritink'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9A850B58F8BF414CA6F6D6E24014EA28 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6E6D130BEBD341E8B23271886F9EFD1A }}
