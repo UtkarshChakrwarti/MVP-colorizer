@@ -14,72 +14,72 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
-<body class="grid grid-rows-1 min-h-screen">
+<body class="grid grid-rows-1 min-h-screen bg-gray-100">
     <a class="github-fork-ribbon" href="https://github.com/UtkarshChakrwarti/MVP-colorizer"
         data-ribbon="Fork me on GitHub" title="Fork me on GitHub" target="_blank">Fork me on GitHub</a>
 
-
-    <div id="colorizer" class="container mx-auto mt-5">
-        <h1 class="text-center text-3xl font-bold mb-5 padding-5">
+    <div id="colorizer" class="container mx-auto mt-5 bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-center text-3xl font-bold mb-5">
             Smritink
         </h1>
         <!-- Dark Mode Toggle -->
         <div class="dark-mode-toggle flex items-center">
-            <i class="fas fa-sun"></i> <!-- Sun icon for light mode -->
+            <i class="fas fa-sun text-yellow-500"></i>
             <label class="switch mx-2">
                 <input type="checkbox" id="darkModeSwitch">
                 <span class="slider round"></span>
             </label>
-            <i class="fas fa-moon"></i> <!-- Moon icon for dark mode -->
+            <i class="fas fa-moon text-gray-700"></i>
         </div>
 
         <form id="uploadForm" enctype="multipart/form-data" class="mb-5">
+            <!-- File Upload Section -->
             <div class="mb-3 p-5 border-2 border-dashed cursor-pointer" id="dropZone">
                 <p class="text-center text-gray-300">Drag and drop images here or click to select</p>
                 <input type="file" id="imageUpload" accept="image/*" multiple style="display: none;">
                 <div id="thumbnails" class="flex flex-wrap mt-2"></div>
             </div>
+
+            <!-- Progress Bar -->
             <div class="progress-container mt-3">
-                <div class="progress-bar bg-green-500" id="progressBar" style="width: 0; height: 5px;">
-                </div>
+                <div class="progress-bar bg-green-500" id="progressBar" style="width: 0; height: 5px;"></div>
             </div>
+
+            <!-- Colorize Button -->
             <div class="colorizeButton mt-3 text-center">
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-auto"
                     id="colorizeButton"><i class="fa fa-paint-brush"></i> Colorize</button>
             </div>
-            <!-- Add this code inside the form tag in index.html -->
+
+            <!-- Colorizer Model Selection -->
             <div class="colorizer-toggle mt-3 text-center">
                 <label for="colorizerModel" class="mr-2">Select Colorizer Model:</label>
-                <select id="colorizerModel" name="colorizer_model" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <select id="colorizerModel" name="colorizer_model"
+                    class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option value="siggraph17" selected>Realism</option>
                     <option value="eccv16">Funky</option>
                 </select>
             </div>
 
         </form>
-        <!--Write this that this application help to colorize b/w image into colorization-->
-        <div class="text-center">
-            <p class="text-gray-500">This application help to colorize black and white image into colorization</p>
+
+        <!-- Description -->
+        <div class="text-center mt-3 text-gray-500">
+            <p>This application helps to colorize black and white images into colorization.</p>
         </div>
 
-
-
+        <!-- Image Grid and Metrics -->
         <div id="metrics" class="mt-3"></div>
         <div class="flex justify-center">
             <div id="imageGrid" class="grid gap-4 place-items-center">
+                <!-- Display Colorized Images Here -->
             </div>
         </div>
     </div>
 
-
-
-
-
-    </div>
-
-    <footer class="bg-gray-200 text-center py-4">
-
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-center py-4 mt-5">
         Developed by
         <a href="https://github.com/UtkarshChakrwarti" target="_blank" class="social-icon">
             <i class="fab fa-github"></i> Utkarsh Chakrwarti
@@ -88,18 +88,16 @@
         <a href="https://www.linkedin.com/in/utkarshchakrwarti/" target="_blank" class="social-icon">
             <i class="fab fa-linkedin"></i> LinkedIn
         </a>
-        </p>
     </footer>
 
+    <!-- Toast Notification -->
     <div id="toast"
         class="hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-200 text-black px-4 py-2 rounded shadow-lg">
-        <strong>Privacy Notice:</strong> Images are not stored on our servers. They are immediately deleted after
-        a frequent interval for your privacy and security.
+        <strong>Privacy Notice:</strong> Images are not stored on our servers. They are immediately deleted after a
+        frequent interval for your privacy and security.
     </div>
 
-
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
 
 </html>
