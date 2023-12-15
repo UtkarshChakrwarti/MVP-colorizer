@@ -126,5 +126,5 @@ def download_file(filename):
 
 
 if __name__ == '__main__':
-    start_remove_images_thread()
+    #start_remove_images_thread()                 
     app.run()
