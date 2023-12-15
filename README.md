@@ -1,6 +1,6 @@
 # <img src="./static/img/smritink.png" alt="Smritnik" width="50" height="50"> MVP Colorizer (Smritink)
-
-
+color your old vintage photos or memories using **Smritink**
+# <img src="./static/img/smritink.gif" alt="Smritnik">
 
 ## Application Link: [MVP Colorizer](https://smritink.azurewebsites.net)
 
